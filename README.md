@@ -5,20 +5,26 @@ A simple example to plot a 2D scatterplot can be found in `plot-example.py`. Rep
 output file appropriately, source a GWpy user environment, and run `python plot-example.py` 
 to generate a plot.
 
+---
+
 Parsing the lines of this example that use the phasespace.py module:
 
 Initialize a phase space object using the TimeSeriesDict defined above:
 
-`pit_yaw = ps.phase_space(y_ts=time1[chan1],x_ts=time1[chan2],y_ts_comp=time2[chan1],x_ts_comp=time2[chan2])`
+```
+pit_yaw = ps.phase_space(y_ts=time1[chan1],x_ts=time1[chan2],y_ts_comp=time2[chan1],x_ts_comp=time2[chan2])
+```
 
 This object now has a number of methods that can be called. To generate a 2D plot from these 
 time series and save it to disk:
 
-```scatterhist = pit_yaw.plot_2d_scatter_hist_comparison(timer=32,median=False,flip=True)
-scatterhist.savefig('/path/to/file.png')```
+```
+scatterhist = pit_yaw.plot_2d_scatter_hist_comparison(timer=32,median=False,flip=True)
+scatterhist.savefig('/path/to/file.png')
+```
 
 The timer argument, `timer=32`, determines how often to plot a data point. Since the example channels are 
-sampled at 2048 Hz, I decided I only wanted every 32nd point. 
+sampled at 2048 Hz, I decided I only wanted every 32nd point in my scatterplot. 
 
 If the median argument is set to `median=True`, the code with calculate the median along each 
 axis for the first set of data points (`time1` in this case) and display them on the plot.
