@@ -1,10 +1,20 @@
 # phasespace
 A set of tools to analyze two GWpy time series in phase space.
 
-A simple example to plot a 2D scatterplot can be found in `plot-example.py`. Replace the 
-output file appropriately, source a GWpy user environment, and run `python plot-example.py` 
-to generate a plot.
+A simple example to plot a 2D scatterplot can be found in `plot-example.py`. 
 
+<b> To run the example code: </b>
+<ol>
+<li>
+Source a GWpy user environment.
+</li>
+<li>
+Replace the output file with one of your choosing. 
+</li>
+<li>
+Run `python plot-example.py` to generate a plot.
+</li>
+</ol>
 ---
 
 Parsing the lines of this example that use the phasespace.py module:
@@ -38,6 +48,8 @@ A second example is provided in `several-alignment-chans.py`, which loops over a
 containing pairs of alignment channels and writes them to a directory along with some basic 
 HTML to display them. The plotting code is all the same, this script is simply a wrapper around 
 the plotting code that uses GWpy's html module for a simple display.
+
+<b>For the HTML to work, the `style.css` file must be copied into the display directory!</b>
 
 If this is going to be used with a different set of channels, replace the `ASC_channels.txt` 
 file with a new file in the same format. 
