@@ -112,16 +112,23 @@ class phase_space:
         return fig
 
 
-    def plot_2d_scatter_hist_comparison(self,timer=32,median=False):
+    def plot_2d_scatter_hist_comparison(self,timer=32,median=False,flip=False):
         fig = plt.figure()
         ax = fig.gca()
-        ax.scatter(self.xdata.value[::timer],self.ydata.value[::timer],
+
+        if not flip:
+            ax.scatter(self.xdata.value[::timer],self.ydata.value[::timer],
+                   s=5,c='c',alpha=0.8,edgecolors='none')
+            ax.scatter(self.xdata_comp.value[::timer],self.ydata_comp.value[::timer],
+                   s=5,c='g',alpha=0.8,edgecolors='none')
+        else:
+            ax.scatter(self.xdata_comp.value[::timer],self.ydata_comp.value[::timer],
+                   s=5,c='g',alpha=0.8,edgecolors='none')
+            ax.scatter(self.xdata.value[::timer],self.ydata.value[::timer],
                    s=5,c='c',alpha=0.8,edgecolors='none')
         ax.grid(which='major',axis='both')
         ax.set_xlabel(self.xdata.channel.name.replace(':','-').replace('_','-'))
         ax.set_ylabel(self.ydata.channel.name.replace(':','-').replace('_','-'))
-        ax.scatter(self.xdata_comp.value[::timer],self.ydata_comp.value[::timer],
-                   s=5,c='g',alpha=0.8,edgecolors='none')
 
         ax.annotate(str(self.xdata.times.value[0]),xy=(1.2,1.5),xycoords='axes fraction',
                     ha='center',va='center',color='blue')
