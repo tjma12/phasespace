@@ -140,7 +140,7 @@ class phase_space:
         divider = make_axes_locatable(ax)
         axHistx = divider.append_axes("top", size=1.6, pad=0.2, sharex=ax)
         axHisty = divider.append_axes("right", size=1.6, pad=0.2, sharey=ax)
-        bins = 50.
+        bins = 50
         axHistx.hist(self.xdata.value[::timer],bins=bins,histtype='step')
         axHistx.grid(which='major',axis='both')
         axHistx.set_ylabel('Counts')
@@ -190,7 +190,7 @@ class phase_space:
         divider = make_axes_locatable(ax)
         axHistx = divider.append_axes("top", size=1.6, pad=0.1, sharex=ax)
         axHisty = divider.append_axes("right", size=1.6, pad=0.1, sharey=ax)
-        bins = 50.
+        bins = 50
         axHistx.hist(self.xdata.value[::timer],bins=bins,histtype='step')
         axHistx.grid(which='major',axis='both')
         axHistx.axvline(self.xdata.median().value,ls='dashed',c='k')
@@ -204,3 +204,29 @@ class phase_space:
         plt.setp(axHistx.get_xticklabels() + axHisty.get_yticklabels(),visible=False)
         return fig
 
+    def displacement(self,time1=True,time2=False):
+        if time1 and time2:
+            raise Exception('Only one timeseries can be plotted at a time, ' +
+                            'set the time1 and time2 arguments appropriately.')
+        if time1:
+            xdata_mediansub = self.xdata.value - self.xdata.median()
+            ydata_mediansub = self.ydata.value - self.ydata.median()
+            times = self.xdata.times.value
+        elif time2:
+            xdata_mediansub = self.xdata_comp.value - self.xdata_comp.median()
+            ydata_mediansub = self.ydata_comp.value - self.ydata_comp.median()
+            times = self.xdata_comp.times.value
+        else:
+            raise Exception('You must select one timeseries to plot')
+
+        disp = np.sqrt(xdata_mediansub**2 + ydata_mediansub**2)
+
+        fig = plt.figure(figsize=(8,4))
+        ax = fig.gca()
+        ax.plot(times[::128] - times[0],disp[::128],'b')
+        ax.grid(which='both',axis='both')
+        ax.set_xlabel('Time since %s [s]' % str(times[0]))
+        ax.set_ylabel('Displacement from median')
+        ax.set_title(self.xdata.channel.name.replace(':','-').replace('_','-') + 
+                    ' and ' + self.ydata.channel.name.replace(':','-').replace('_','-'))
+        return fig
